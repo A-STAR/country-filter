@@ -41,5 +41,10 @@ export class FilterService {
   constructor() { }
 
   filterCountries(query) {
+    const filteredCountries = this.countries.filter(country => {
+      return new RegExp(query, 'gi').test(country);
+    });
+
+    this.countryChanged.emit(filteredCountries);
   }
 }

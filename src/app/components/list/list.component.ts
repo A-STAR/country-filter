@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Subscription } from 'rxjs/Subscription';
 import { FilterService } from '../../services/filter.service';
 
 
@@ -10,11 +11,17 @@ import { FilterService } from '../../services/filter.service';
 export class ListComponent implements OnInit, OnDestroy {
 
   countriesToBeRendered;
-  countryChanged;
+  countryChanged = this.service.countryChanged;
+  subscription: Subscription;
   constructor(private service: FilterService) {
     this.countriesToBeRendered = this.service.countries;
   }
-  ngOnInit() { }
+  ngOnInit() {
+    this.countryChanged.subscribe(countries => {
+      this.countriesToBeRendered = countries;
+    });
+  }
   ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

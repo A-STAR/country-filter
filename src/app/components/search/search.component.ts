@@ -14,5 +14,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {}
   onCountryChangeClicked() {
+    this.service.filterCountries(this.country);
   }
 }
